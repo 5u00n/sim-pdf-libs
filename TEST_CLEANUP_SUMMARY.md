@@ -3,8 +3,9 @@
 ## 🧹 What Was Cleaned Up
 
 ### ❌ **Removed Unnecessary Test Files:**
+
 - `test-basic.pdf` - Generated PDF file
-- `test-headers-footers.pdf` - Generated PDF file  
+- `test-headers-footers.pdf` - Generated PDF file
 - `test-pagenumbers.pdf` - Generated PDF file
 - `test-advanced.pdf` - Generated PDF file
 - `test-final.pdf` - Generated PDF file
@@ -16,6 +17,7 @@
 - `test-standalone.php` - Old test file
 
 ### ✅ **Kept Important Test Files:**
+
 - `tests/basic-test.php` - Basic functionality test
 - `tests/advanced-test.php` - Advanced features test
 - `tests/comprehensive-test.php` - Complete library test
@@ -37,11 +39,13 @@ run-tests.php              # Test runner (run all tests)
 ## 🚀 **How to Run Tests**
 
 ### Run All Tests
+
 ```bash
 php run-tests.php
 ```
 
 ### Run Individual Tests
+
 ```bash
 php tests/basic-test.php
 php tests/advanced-test.php
@@ -49,9 +53,11 @@ php tests/comprehensive-test.php
 ```
 
 ## ✅ **Test Results**
+
 All tests are now passing:
+
 - ✅ Basic Test: PASSED
-- ✅ Advanced Test: PASSED  
+- ✅ Advanced Test: PASSED
 - ✅ Comprehensive Test: PASSED
 
 ## 🎉 **Benefits of Cleanup**

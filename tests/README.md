@@ -5,18 +5,21 @@
 This directory contains the essential test files for SimPDF library:
 
 ### **tests/basic-test.php**
+
 - Tests basic PDF generation
 - Tests page numbers
 - Tests headers and footers
 - Verifies core functionality
 
 ### **tests/advanced-test.php**
+
 - Tests individual services (PageBreakService, HeaderFooterService, StylingService)
 - Tests comprehensive PDF generation
 - Tests advanced features like watermarks and bookmarks
 - Verifies all components work together
 
 ### **tests/comprehensive-test.php**
+
 - Tests the complete library functionality
 - Tests all features in one comprehensive test
 - Verifies production readiness
@@ -25,11 +28,13 @@ This directory contains the essential test files for SimPDF library:
 ## 🚀 Running Tests
 
 ### Run All Tests
+
 ```bash
 php run-tests.php
 ```
 
 ### Run Individual Tests
+
 ```bash
 # Basic functionality test
 php tests/basic-test.php
@@ -68,6 +73,7 @@ All tests should pass to ensure SimPDF library is working correctly. The tests v
 ## 🐛 Troubleshooting
 
 If tests fail:
+
 1. Check that all dependencies are installed
 2. Verify PHP version is 8.0+
 3. Ensure DomPDF is working
