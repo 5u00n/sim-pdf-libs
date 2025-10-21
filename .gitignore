@@ -1,0 +1,42 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+temp/
+
+# Test files
+test-*.php
+test-*.pdf
+*.pdf
+
+# Composer
+composer.lock
+
+# Laravel
+.env
+.env.example
+storage/logs/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+bootstrap/cache/
+
+# PHPUnit
+.phpunit.result.cache

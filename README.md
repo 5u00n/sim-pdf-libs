@@ -527,9 +527,10 @@ try {
 
 ## Requirements
 
-- PHP 8.0 or higher
-- Laravel 9.0 or higher
-- DomPDF 2.0 or higher
+- **PHP 8.1 or higher** (recommended PHP 8.2+)
+- **Laravel 9.0 or higher** (supports Laravel 12.0)
+- **DomPDF 3.0.1 or higher** (latest stable)
+- **Intervention Image 3.11.4 or higher** (for image processing)
 
 ## License
 
