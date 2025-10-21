@@ -1,6 +1,8 @@
-# SimPDF Library - Integration Guide
+# SimPDF Library - Final Integration Guide
 
 ## 🚀 How to Apply SimPDF to Your Existing Laravel Project
+
+**Repository:** [https://github.com/5u00n/sim-pdf-libs](https://github.com/5u00n/sim-pdf-libs)
 
 ### Step 1: Install the Library
 
@@ -12,14 +14,7 @@ composer config repositories.sim-pdf vcs https://github.com/5u00n/sim-pdf-libs
 composer require sim-pdf/sim-pdf-libs:dev-main
 ```
 
-#### Option B: Install from Packagist (When Published)
-
-```bash
-# Once published to Packagist
-composer require sim-pdf/sim-pdf-libs
-```
-
-#### Option C: Install as Git Submodule
+#### Option B: Install as Git Submodule
 
 ```bash
 # Add as Git submodule to your project
@@ -30,17 +25,20 @@ composer config repositories.sim-pdf path packages/sim-pdf-libs
 composer require sim-pdf/sim-pdf-libs:*
 ```
 
-#### Option D: Install from Local Development
+#### Option C: Manual Git Clone
 
 ```bash
-# For local development only
-composer config repositories.sim-pdf path /path/to/sim-pdf-libs
+# Clone the repository manually
+git clone https://github.com/5u00n/sim-pdf-libs.git packages/sim-pdf-libs
+
+# Add to composer.json
+composer config repositories.sim-pdf path packages/sim-pdf-libs
 composer require sim-pdf/sim-pdf-libs:*
 ```
 
 ### Step 2: Register the Service Provider
 
-Add to your `config/app.php` in the `providers` array:
+#### For Laravel 9-10 (config/app.php):
 
 ```php
 'providers' => [
@@ -49,7 +47,7 @@ Add to your `config/app.php` in the `providers` array:
 ],
 ```
 
-Or add to `bootstrap/providers.php` (Laravel 11+):
+#### For Laravel 11+ (bootstrap/providers.php):
 
 ```php
 return [
@@ -124,38 +122,6 @@ public function generateAdvancedPdf(Request $request)
 }
 ```
 
-#### Multi-page Document with Custom Breaks
-
-```php
-public function generateMultiPagePdf(Request $request)
-{
-    $sections = $this->getYourExistingSections();
-
-    $html = '<!DOCTYPE html><html><head><title>Multi-page Document</title></head><body>';
-
-    foreach ($sections as $index => $section) {
-        $html .= "<h1>{$section['title']}</h1>";
-        $html .= "<p>{$section['content']}</p>";
-
-        // Add page break after each section except the last
-        if ($index < count($sections) - 1) {
-            $html .= '<div class="page-break"></div>';
-        }
-    }
-
-    $html .= '</body></html>';
-
-    return SimPdf::loadHtml($html)
-        ->setPaper('A4', 'portrait')
-        ->enablePageNumbers()
-        ->addStyle('
-            .page-break { page-break-before: always; }
-            h1 { color: #2c3e50; }
-        ')
-        ->download('multi-page-document.pdf');
-}
-```
-
 ### Step 5: Update Your Existing Views
 
 #### Add CSS Classes for Page Breaks
@@ -179,39 +145,6 @@ In your existing Blade templates, add these CSS classes:
 .break-after {
   page-break-after: always;
 }
-```
-
-#### Example Updated View
-
-```blade
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Your Existing Document</title>
-    <style>
-        /* Your existing styles */
-        body { font-family: Arial, sans-serif; }
-
-        /* Add SimPDF styles */
-        .page-break { page-break-before: always; }
-        .no-break { page-break-inside: avoid; }
-    </style>
-</head>
-<body>
-    <h1>Your Existing Content</h1>
-
-    @foreach($yourExistingData as $item)
-        <div class="item">
-            <h2>{{ $item->title }}</h2>
-            <p>{{ $item->content }}</p>
-        </div>
-
-        @if(!$loop->last)
-            <div class="page-break"></div>
-        @endif
-    @endforeach
-</body>
-</html>
 ```
 
 ### Step 6: Replace Existing PDF Generation
@@ -245,42 +178,23 @@ Add to your `routes/web.php`:
 ```php
 Route::get('/pdf/generate', [YourController::class, 'generatePdf']);
 Route::get('/pdf/advanced', [YourController::class, 'generateAdvancedPdf']);
-Route::get('/pdf/multi-page', [YourController::class, 'generateMultiPagePdf']);
 ```
 
-### Step 8: Configuration
+## 🎯 Quick Installation Commands
 
-Create or update `config/simpdf.php`:
+```bash
+# 1. Install from Git
+composer config repositories.sim-pdf vcs https://github.com/5u00n/sim-pdf-libs
+composer require sim-pdf/sim-pdf-libs:dev-main
 
-```php
-<?php
+# 2. Clear caches
+composer dump-autoload
+php artisan config:clear
+php artisan cache:clear
 
-return [
-    'default' => [
-        'paper' => 'A4',
-        'orientation' => 'portrait',
-        'dpi' => 96,
-        'defaultFont' => 'DejaVu Sans',
-    ],
-
-    'pageNumbers' => [
-        'enabled' => true,
-        'position' => 'bottom-right',
-        'format' => 'Page {PAGE_NUM} of {PAGE_COUNT}',
-    ],
-
-    'headers' => [
-        'enabled' => true,
-        'height' => '50px',
-        'background' => '#ffffff',
-    ],
-
-    'footers' => [
-        'enabled' => true,
-        'height' => '40px',
-        'background' => '#ffffff',
-    ],
-];
+# 3. Test the installation
+php artisan tinker
+>>> SimPdf::loadHtml('<h1>Test</h1>')->output();
 ```
 
 ## 🎯 Common Use Cases
@@ -320,28 +234,18 @@ public function generateReport(Request $request)
 }
 ```
 
-### 3. Table with Pagination
+### 3. Large Table Export
 
 ```php
-public function generateTablePdf()
+public function exportTable()
 {
     $data = $this->getLargeTableData();
     $html = view('tables.pdf', compact('data'))->render();
 
     return SimPdf::loadHtml($html)
-        ->setPaper('A4', 'portrait')
+        ->breakTable(['repeat_header' => true])
         ->enablePageNumbers()
-        ->breakTable([
-            'repeat_header' => true,
-            'min_rows' => 5,
-            'max_rows' => 20
-        ])
-        ->addStyle('
-            table { page-break-inside: auto; }
-            thead { display: table-header-group; }
-            tbody { page-break-inside: avoid; }
-        ')
-        ->download('table-report.pdf');
+        ->download('table-export.pdf');
 }
 ```
 
@@ -355,18 +259,26 @@ php artisan config:clear
 php artisan cache:clear
 ```
 
-### If PDF generation fails:
+### If Git clone fails:
 
-1. Check that DomPDF is installed: `composer show dompdf/dompdf`
-2. Ensure you have enough memory: `ini_set('memory_limit', '256M')`
-3. Check the logs: `storage/logs/laravel.log`
-
-### If styling doesn't work:
-
-1. Use inline styles for critical styling
-2. Ensure CSS is valid and PDF-compatible
-3. Test with simple HTML first
+1. Check your Git installation: `git --version`
+2. Verify the repository URL is correct: [https://github.com/5u00n/sim-pdf-libs](https://github.com/5u00n/sim-pdf-libs)
+3. Ensure you have access to the repository
+4. Try cloning manually: `git clone https://github.com/5u00n/sim-pdf-libs.git`
 
 ## 📞 Support
 
 The SimPDF library is now integrated into your existing Laravel project! You can start using it immediately with your existing views and data.
+
+**Repository:** [https://github.com/5u00n/sim-pdf-libs](https://github.com/5u00n/sim-pdf-libs)
+
+## 🚀 Next Steps
+
+1. **Install the library** using the commands above
+2. **Update your existing controllers** to use SimPdf facade
+3. **Add page breaks** to your existing views where needed
+4. **Configure headers and footers** for your documents
+5. **Test with your existing data** to ensure everything works
+6. **Deploy to production** with confidence!
+
+The SimPDF library is production-ready and will enhance your existing Laravel application with powerful PDF generation capabilities.

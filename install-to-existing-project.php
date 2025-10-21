@@ -18,13 +18,13 @@ echo "✅ Laravel project detected.\n";
 
 // Get the current project path
 $projectPath = getcwd();
-$simpdfPath = '/Users/suren/Documents/GitProjects/sim-pdf-libs';
+$gitRepository = 'https://github.com/5u00n/sim-pdf-libs.git';
 
 echo "📁 Project path: {$projectPath}\n";
-echo "📁 SimPDF path: {$simpdfPath}\n\n";
+echo "🌐 Git repository: {$gitRepository}\n\n";
 
-// Step 1: Copy SimPDF to the project
-echo "Step 1: Copying SimPDF library to your project...\n";
+// Step 1: Clone SimPDF from Git repository
+echo "Step 1: Cloning SimPDF library from Git repository...\n";
 
 $targetPath = $projectPath . '/packages/sim-pdf-libs';
 if (!is_dir('packages')) {
@@ -37,12 +37,16 @@ if (is_dir($targetPath)) {
     exec("rm -rf {$targetPath}");
 }
 
-exec("cp -r {$simpdfPath} {$targetPath}");
+// Clone the repository
+$cloneCommand = "git clone {$gitRepository} {$targetPath}";
+exec($cloneCommand, $output, $returnCode);
 
-if (is_dir($targetPath)) {
-    echo "✅ SimPDF library copied successfully\n";
+if ($returnCode === 0 && is_dir($targetPath)) {
+    echo "✅ SimPDF library cloned successfully\n";
 } else {
-    echo "❌ Failed to copy SimPDF library\n";
+    echo "❌ Failed to clone SimPDF library\n";
+    echo "   Make sure you have Git installed and the repository URL is correct\n";
+    echo "   You can also manually clone: git clone {$gitRepository} packages/sim-pdf-libs\n";
     exit(1);
 }
 

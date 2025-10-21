@@ -15,39 +15,44 @@ A comprehensive PDF generation library for Laravel with advanced features includ
 - 📝 **Metadata** - Set PDF metadata (title, author, subject, etc.)
 - ⚡ **Performance** - Optimized for large documents and high performance
 
-## Installation
+## 🚀 Super Easy Installation
 
-1. Install the package via Composer:
+### One-Command Installer (Recommended)
 
 ```bash
-composer require sim-pdf/sim-pdf-libs
+# Download and run installer (from your Laravel project root)
+curl -O https://raw.githubusercontent.com/5u00n/sim-pdf-libs/main/install-simpdf.php && php install-simpdf.php
 ```
 
-2. Publish the configuration file:
+### Manual Installation
 
 ```bash
+# Install via Composer
+composer config repositories.sim-pdf vcs https://github.com/5u00n/sim-pdf-libs
+composer require sim-pdf/sim-pdf-libs:dev-main
+
+# Publish config (optional)
 php artisan vendor:publish --provider="SimPdf\SimPdfLibs\SimPdfServiceProvider" --tag="config"
 ```
 
-3. Publish the views (optional):
+## 🎯 Super Simple Usage
 
-```bash
-php artisan vendor:publish --provider="SimPdf\SimPdfLibs\SimPdfServiceProvider" --tag="views"
-```
-
-## Basic Usage
-
-### Simple PDF Generation
+### Basic PDF (3 lines!)
 
 ```php
 use SimPdf\SimPdfLibs\Facades\SimPdf;
 
-$html = '<h1>Hello World</h1><p>This is a simple PDF.</p>';
-
-SimPdf::loadHtml($html)
-    ->setPaper('A4', 'portrait')
-    ->download('document.pdf');
+$html = '<h1>Hello World</h1><p>This is a PDF!</p>';
+return SimPdf::loadHtml($html)->download('document.pdf');
 ```
+
+### Test Installation
+
+After installation, visit: `http://your-app.test/simpdf/test`
+
+## 📚 Advanced Usage
+
+````
 
 ### Multi-page PDF with Headers and Footers
 
@@ -82,7 +87,7 @@ SimPdf::loadHtml($html)
         'background' => '#f8f9fa'
     ])
     ->download('multi-page-document.pdf');
-```
+````
 
 ### Advanced Table with Custom Breaks
 

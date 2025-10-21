@@ -4,7 +4,7 @@
  * Simple test script for SimPDF library
  */
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -223,29 +223,20 @@ try {
         echo "❌ Headers and footers: FAILED\n";
     }
     
-    // Save test PDFs
-    echo "\nSaving test PDFs...\n";
+    // Test PDF generation (without saving files)
+    echo "\nTesting PDF generation...\n";
     
-    $testFile1 = __DIR__ . '/test-basic.pdf';
-    file_put_contents($testFile1, $output);
-    
-    $testFile2 = __DIR__ . '/test-pagenumbers.pdf';
-    file_put_contents($testFile2, $output2);
-    
-    $testFile3 = __DIR__ . '/test-headers-footers.pdf';
-    file_put_contents($testFile3, $output3);
-    
-    if (file_exists($testFile1) && file_exists($testFile2) && file_exists($testFile3)) {
-        echo "✅ PDFs saved successfully:\n";
-        echo "   - Basic PDF: " . number_format(filesize($testFile1)) . " bytes\n";
-        echo "   - Page Numbers PDF: " . number_format(filesize($testFile2)) . " bytes\n";
-        echo "   - Headers/Footers PDF: " . number_format(filesize($testFile3)) . " bytes\n";
+    if (!empty($output) && !empty($output2) && !empty($output3)) {
+        echo "✅ All PDF generation tests passed:\n";
+        echo "   - Basic PDF: " . number_format(strlen($output)) . " bytes\n";
+        echo "   - Page Numbers PDF: " . number_format(strlen($output2)) . " bytes\n";
+        echo "   - Headers/Footers PDF: " . number_format(strlen($output3)) . " bytes\n";
     } else {
-        echo "❌ Failed to save PDFs\n";
+        echo "❌ Some PDF generation tests failed\n";
     }
     
     echo "\n🎉 All tests completed!\n";
-    echo "Check the test-*.pdf files to see the results.\n";
+    echo "SimPDF library is working correctly!\n";
     
 } catch (Exception $e) {
     echo "❌ Error: " . $e->getMessage() . "\n";

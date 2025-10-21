@@ -1,6 +1,12 @@
-# SimPDF Library - Integration Guide
+# SimPDF Library - Git Integration Guide
 
 ## 🚀 How to Apply SimPDF to Your Existing Laravel Project
+
+### Prerequisites
+
+- Laravel 9.0+ project
+- Composer installed
+- Git installed (for Git-based installation)
 
 ### Step 1: Install the Library
 
@@ -12,14 +18,7 @@ composer config repositories.sim-pdf vcs https://github.com/5u00n/sim-pdf-libs
 composer require sim-pdf/sim-pdf-libs:dev-main
 ```
 
-#### Option B: Install from Packagist (When Published)
-
-```bash
-# Once published to Packagist
-composer require sim-pdf/sim-pdf-libs
-```
-
-#### Option C: Install as Git Submodule
+#### Option B: Install as Git Submodule
 
 ```bash
 # Add as Git submodule to your project
@@ -30,17 +29,27 @@ composer config repositories.sim-pdf path packages/sim-pdf-libs
 composer require sim-pdf/sim-pdf-libs:*
 ```
 
-#### Option D: Install from Local Development
+#### Option C: Install from Packagist (When Published)
 
 ```bash
-# For local development only
-composer config repositories.sim-pdf path /path/to/sim-pdf-libs
+# Once published to Packagist
+composer require sim-pdf/sim-pdf-libs
+```
+
+#### Option D: Manual Git Clone
+
+```bash
+# Clone the repository manually
+git clone https://github.com/5u00n/sim-pdf-libs.git packages/sim-pdf-libs
+
+# Add to composer.json
+composer config repositories.sim-pdf path packages/sim-pdf-libs
 composer require sim-pdf/sim-pdf-libs:*
 ```
 
 ### Step 2: Register the Service Provider
 
-Add to your `config/app.php` in the `providers` array:
+#### For Laravel 9-10 (config/app.php):
 
 ```php
 'providers' => [
@@ -49,7 +58,7 @@ Add to your `config/app.php` in the `providers` array:
 ],
 ```
 
-Or add to `bootstrap/providers.php` (Laravel 11+):
+#### For Laravel 11+ (bootstrap/providers.php):
 
 ```php
 return [
@@ -367,6 +376,40 @@ php artisan cache:clear
 2. Ensure CSS is valid and PDF-compatible
 3. Test with simple HTML first
 
+### If Git clone fails:
+
+1. Check your Git installation: `git --version`
+2. Verify the repository URL is correct
+3. Ensure you have access to the repository
+4. Try cloning manually: `git clone https://github.com/your-username/sim-pdf-libs.git`
+
 ## 📞 Support
 
 The SimPDF library is now integrated into your existing Laravel project! You can start using it immediately with your existing views and data.
+
+### Quick Start Commands
+
+```bash
+# Install from Git
+composer config repositories.sim-pdf vcs https://github.com/5u00n/sim-pdf-libs
+composer require sim-pdf/sim-pdf-libs:dev-main
+
+# Clear caches
+composer dump-autoload
+php artisan config:clear
+php artisan cache:clear
+
+# Test the installation
+php artisan tinker
+>>> SimPdf::loadHtml('<h1>Test</h1>')->output();
+```
+
+## 🚀 Next Steps
+
+1. **Update your existing controllers** to use SimPdf facade
+2. **Add page breaks** to your existing views where needed
+3. **Configure headers and footers** for your documents
+4. **Test with your existing data** to ensure everything works
+5. **Deploy to production** with confidence!
+
+The SimPDF library is production-ready and will enhance your existing Laravel application with powerful PDF generation capabilities.

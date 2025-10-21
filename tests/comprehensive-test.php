@@ -4,7 +4,7 @@
  * Final comprehensive test for SimPDF library
  */
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -253,19 +253,15 @@ return SimPdf::loadHtml($html)
         echo "❌ PDF generation: FAILED\n";
     }
     
-    // Save final test PDF
-    $testFile = __DIR__ . '/test-final.pdf';
-    file_put_contents($testFile, $output);
-    
-    if (file_exists($testFile)) {
-        echo "✅ Final PDF saved: " . number_format(filesize($testFile)) . " bytes\n";
+    // Test final PDF generation (without saving file)
+    if (!empty($output)) {
+        echo "✅ Final PDF generation: " . number_format(strlen($output)) . " bytes\n";
     } else {
-        echo "❌ Failed to save final PDF\n";
+        echo "❌ Final PDF generation failed\n";
     }
     
     echo "\n🎉 SimPDF Library Test Completed Successfully!\n";
     echo "The library is ready for production use!\n";
-    echo "Check the test-final.pdf file to see the complete demonstration.\n";
     
 } catch (Exception $e) {
     echo "❌ Error: " . $e->getMessage() . "\n";

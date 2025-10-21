@@ -5,10 +5,28 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "SIM PDF Team",
-            "email": "support@simpdf.com"
+            "name": "Suren",
+            "email": "surenhembram97@gmail.com",
+            "homepage": "https://github.com/5u00n"
         }
     ],
+    "homepage": "https://github.com/5u00n/sim-pdf-libs",
+    "keywords": [
+        "pdf",
+        "laravel",
+        "dompdf",
+        "multi-page",
+        "page-break",
+        "headers",
+        "footers",
+        "styling",
+        "watermark",
+        "bookmark"
+    ],
+    "support": {
+        "issues": "https://github.com/5u00n/sim-pdf-libs/issues",
+        "source": "https://github.com/5u00n/sim-pdf-libs"
+    },
     "require": {
         "php": "^8.0",
         "illuminate/support": "^9.0|^10.0|^11.0",
